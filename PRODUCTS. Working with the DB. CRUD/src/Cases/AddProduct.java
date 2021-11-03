@@ -1,4 +1,4 @@
-package cases;
+package Cases;
 
 import Entity.Product;
 import SqlRequests.AddProductSqlRequest;

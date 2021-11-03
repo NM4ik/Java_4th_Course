@@ -1,5 +1,5 @@
 import SqlRequests.allProductsSqlRequest;
-import cases.AddProduct;
+import Cases.AddProduct;
 
 import java.sql.SQLException;
 import java.util.Scanner;
