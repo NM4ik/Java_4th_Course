@@ -1,3 +1,5 @@
+import Cases.DeleteProduct;
+import Cases.EditProduct;
 import SqlRequests.allProductsSqlRequest;
 import Cases.AddProduct;
 
@@ -7,6 +9,7 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) throws SQLException {
+        int i = 1;
 
         while (true){
             Scanner scanner = new Scanner(System.in);
@@ -33,23 +36,18 @@ public class App {
                     AddProduct.addProduct();
                     break;
                 case 3:
-                    AddProduct.addProduct();
+                    DeleteProduct.deleteProduct();
                     break;
-//                case 4:
-//                    AddProduct.addProduct();
-//                    break;
+                case 4:
+                    EditProduct.editProduct();
+                    break;
+                case 5:
+                    return;
                 default:
                     System.out.println("Non-existing item");
                     break;
             }
         }
-
-
-//        try {
-//            System.out.print(allProductsSqlRequest.AllProducts());
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

@@ -34,7 +34,5 @@ public class AddProductSqlRequest {
 
             throw new SQLException("products not added");
         }
-
-
     }
 }

@@ -16,7 +16,7 @@ public class AddProduct {
                 """);
 
         System.out.println("Enter title: ");
-        String title =  scanner.nextLine();
+        String title = scanner.nextLine();
 
         System.out.println("Enter cost: ");
         int cost = scanner.nextInt();
