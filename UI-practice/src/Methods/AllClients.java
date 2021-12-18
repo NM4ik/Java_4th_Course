@@ -10,9 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllClientsSqlRequest {
+public class AllClients {
 
-    public static List<Client> AllClients() throws SQLException {
+    public static List<Client> allClients() throws SQLException {
         try (Connection connection = DataBaseConnection.getConnection()) {
             List<Client> clients = new ArrayList<>();
 

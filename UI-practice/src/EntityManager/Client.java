@@ -29,14 +29,14 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Patronymic='" + Patronymic + '\'' +
-                ", Birthday=" + Birthday +
-                ", RegistrationDate=" + RegistrationDate +
-                ", Email='" + Email + '\'' +
-                ", Phone='" + Phone + '\'' +
-                ", GenderCode=" + GenderCode +
+                ", Имя='" + firstName + '\'' +
+                ", Фамилия='" + LastName + '\'' +
+                ", Отчество='" + Patronymic + '\'' +
+                ", День рождение=" + Birthday +
+                ", Дата регистрации=" + RegistrationDate +
+                ", Почта='" + Email + '\'' +
+                ", Телефон='" + Phone + '\'' +
+                ", Пол=" + GenderCode +
                 '}' + '\n';
     }
 
