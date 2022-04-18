@@ -84,7 +84,7 @@ public class ProductEditForm extends BaseForm {
             try {
                 ProductEntityManager.updateProduct(productEntity);
                 dispose();
-                new MainForm();
+                new ProductTableForm();
             } catch (SQLException ex) {
                 DialogUtil.showError(this, "Продукт не был обновлен...");
                 ex.printStackTrace();
@@ -94,14 +94,15 @@ public class ProductEditForm extends BaseForm {
 
         backButton.addActionListener(e -> {
             dispose();
-            new MainForm();
+            new ProductTableForm();
+
         });
 
         deleteButton.addActionListener(e -> {
             try {
                 ProductEntityManager.deleteProduct(productEntity.getId());
                 dispose();
-                new MainForm();
+                new ProductTableForm();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

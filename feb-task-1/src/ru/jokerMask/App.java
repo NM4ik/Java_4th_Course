@@ -6,6 +6,7 @@ import ru.jokerMask.manager.MaterialEntityManager;
 import ru.jokerMask.manager.ProductEntityManager;
 import ru.jokerMask.ui.MainForm;
 import ru.jokerMask.ui.ProductCreateForm;
+import ru.jokerMask.ui.ProductTableForm;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class App {
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        new MainForm();
+        new ProductTableForm();
     }
 
 

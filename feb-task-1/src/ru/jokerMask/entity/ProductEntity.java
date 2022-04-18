@@ -1,5 +1,8 @@
 package ru.jokerMask.entity;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.IOException;
 import java.util.Objects;
 
 public class ProductEntity {
@@ -12,6 +15,7 @@ public class ProductEntity {
     private int productionWorkshopNumber;
     private double minCostForAgent;
     private String ProductionType;
+//    private ImageIcon photo;
 
     public ProductEntity(int id, String title, int articleNumber, String description, String image, int productionPersonCount, int productionWorkshopNumber, double minCostForAgent, String productionType) {
         this.id = id;
@@ -22,7 +26,14 @@ public class ProductEntity {
         this.productionPersonCount = productionPersonCount;
         this.productionWorkshopNumber = productionWorkshopNumber;
         this.minCostForAgent = minCostForAgent;
-        ProductionType = productionType;
+        this.ProductionType = productionType;
+
+//        try {
+//            System.out.println(image);
+//            this.photo = new ImageIcon(ImageIO.read(ProductEntity.class.getClassLoader().getResource(image)));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public ProductEntity(String title, int articleNumber, String description, String image, int productionPersonCount, int productionWorkshopNumber, double minCostForAgent, String productionType) {
@@ -51,6 +62,7 @@ public class ProductEntity {
                 ", ProductionType='" + ProductionType + '\'' +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {

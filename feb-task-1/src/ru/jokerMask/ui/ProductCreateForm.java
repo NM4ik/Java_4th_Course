@@ -67,7 +67,7 @@ public class ProductCreateForm extends BaseForm {
             try {
                 ProductEntityManager.insertProduct(productEntity);
                 dispose();
-                new MainForm();
+                new ProductTableForm();
             } catch (SQLException ex) {
                 DialogUtil.showError(this, "Продукт не был добавлен...");
                 ex.printStackTrace();
@@ -77,7 +77,7 @@ public class ProductCreateForm extends BaseForm {
 
         backButton.addActionListener(e -> {
             dispose();
-            new MainForm();
+            new ProductTableForm();
         });
     }
 }
