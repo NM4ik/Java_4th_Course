@@ -25,6 +25,11 @@ public class CustomTableModel<T> extends AbstractTableModel {
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return cls.getDeclaredFields()[columnIndex].getType();
+    }
+
+    @Override
     public String getColumnName(int column) {
         return columnNames[column];
     }

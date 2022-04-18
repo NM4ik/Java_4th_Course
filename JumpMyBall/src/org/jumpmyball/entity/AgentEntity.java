@@ -1,5 +1,9 @@
 package org.jumpmyball.entity;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.Objects;
 
 public class AgentEntity {
@@ -11,6 +15,7 @@ public class AgentEntity {
     private String email;
     private String logo;
     private int priority;
+    private ImageIcon image;
 
     public AgentEntity(int id, String title, String agentType, String address, String phone, String email, String logo, int priority) {
         this.id = id;
@@ -21,6 +26,17 @@ public class AgentEntity {
         this.email = email;
         this.logo = logo;
         this.priority = priority;
+
+        try {
+            this.image = new ImageIcon(
+                    ImageIO.read(AgentEntity.class.getClassLoader().getResource(logo)).getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        } catch (Exception e) {
+            try {
+                this.image = new ImageIcon(
+                        ImageIO.read(AgentEntity.class.getClassLoader().getResource("/agents/picture.png")).getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+            } catch (Exception ex) {
+            }
+        }
     }
 
     public int getId() {
