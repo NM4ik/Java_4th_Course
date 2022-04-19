@@ -9,10 +9,7 @@ import org.jumpmyball.util.DialogUtil;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class AgentTableForm extends BaseForm {
     private JTable table;
@@ -38,6 +35,47 @@ public class AgentTableForm extends BaseForm {
         initBoxes();
     }
 
+
+    private void ApplyFilters() {
+        try {
+            List<AgentEntity> entities = AgentEntityManager.selectAllAgents();
+            int max = entities.size();
+
+
+            Object e = agentPrioritycomboBox.getSelectedItem();
+            if (e.equals("<50")) {
+                entities.removeIf(agentEntity -> agentEntity.getPriority() >= 50);
+            }
+            if (e.equals("50-150")) {
+                entities.removeIf(agentEntity -> agentEntity.getPriority() < 50);
+                entities.removeIf(agentEntity -> agentEntity.getPriority() >= 150);
+            }
+            if (e.equals("150-300")) {
+                entities.removeIf(agentEntity -> agentEntity.getPriority() < 150);
+                entities.removeIf(agentEntity -> agentEntity.getPriority() >= 300);
+            }
+            if (e.equals(">300")) {
+                entities.removeIf(agentEntity -> agentEntity.getPriority() < 300);
+            }
+
+            Object x = agentTypeComboBox.getSelectedItem();
+
+            if (!x.equals("Все")) {
+                entities.removeIf(agentEntity -> !x.equals(agentEntity.getAgentType()));
+            }
+
+            model.setRows(entities);
+            model.fireTableDataChanged();
+
+            prioritySort = false;
+
+            initValues(max, entities.size());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initBoxes() {
         agentTypeComboBox.addItem("Все");
         try {
@@ -59,58 +97,15 @@ public class AgentTableForm extends BaseForm {
 
         agentPrioritycomboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                try {
-                    List<AgentEntity> entities = AgentEntityManager.selectAllAgents();
-                    int max = entities.size();
-                    if (e.getItem().equals("<50")) {
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() >= 50);
-                    }
-                    if (e.getItem().equals("50-150")) {
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() < 50);
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() >= 150);
-                    }
-                    if (e.getItem().equals("150-300")) {
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() < 150);
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() >= 300);
-                    }
-                    if (e.getItem().equals(">300")) {
-                        entities.removeIf(agentEntity -> agentEntity.getPriority() < 300);
-                    }
-                    model.setRows(entities);
-                    model.fireTableDataChanged();
-                    initValues(max, entities.size());
-
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                ApplyFilters();
             }
         });
-
 
         agentTypeComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
-                        List<AgentEntity> entities = AgentEntityManager.selectAllAgents();
-
-                        if (e.getItem().equals("Все")) {
-                            model.setRows(entities);
-                            model.fireTableDataChanged();
-
-                            initValues(entities.size(), entities.size());
-                        } else {
-                            int max = entities.size();
-                            entities.removeIf(agentEntity -> !e.getItem().equals(agentEntity.getAgentType()));
-                            model.setRows(entities);
-                            model.fireTableDataChanged();
-                            initValues(max, entities.size());
-                        }
-
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-
+                    ApplyFilters();
                 }
             }
         });
@@ -120,35 +115,18 @@ public class AgentTableForm extends BaseForm {
 
     private void initSort() {
         sortByPriorityButton.addActionListener(e -> {
-            try {
-                List<AgentEntity> entities = AgentEntityManager.selectAllAgents();
 
-                if (prioritySort) {
-                    entities.sort(new Comparator<AgentEntity>() {
-                        @Override
-                        public int compare(AgentEntity o1, AgentEntity o2) {
-                            return Integer.compare(o1.getPriority(), o2.getPriority());
-                        }
-                    });
+            Collections.sort(model.getRows(), new Comparator<AgentEntity>() {
+
+                @Override
+                public int compare(AgentEntity o1, AgentEntity o2) {
+                    return prioritySort ? Integer.compare(o1.getPriority(), o2.getPriority()) : Integer.compare(o2.getPriority(), o1.getPriority());
                 }
-                if (!prioritySort) {
-                    entities.sort(new Comparator<AgentEntity>() {
-                        @Override
-                        public int compare(AgentEntity o1, AgentEntity o2) {
-                            return Integer.compare(o2.getPriority(), o1.getPriority());
-                        }
-                    });
-                }
+            });
 
-                prioritySort = !prioritySort;
-                model.setRows(entities);
-                model.fireTableDataChanged();
 
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                DialogUtil.showError(this, "DatabaseError");
-            }
-
+            prioritySort = !prioritySort;
+            model.fireTableDataChanged();
 
         });
     }
